@@ -8,7 +8,8 @@ dotenv.config();
 const app = express();
 const proxy = httpProxy.createProxy();
 const PORT = process.env.PORT || 8000;
-const BASE_PATH = process.env.BASE_PATH;
+// const BASE_PATH = process.env.BASE_PATH;
+
 
 app.use(express.json());
 app.use(cors());
@@ -16,7 +17,7 @@ app.use(cors());
 app.use((req, res, next) => {
   const hostName = req.hostname;
   const subDomain = hostName.split(".")[0];
-  const resolvesTo = `${BASE_PATH}/${subDomain}`;
+  const resolvesTo = `https://${subDomain}.google.com`;
   console.log(resolvesTo);
   return proxy.web(req, res, { target: resolvesTo, changeOrigin: true });
 });
